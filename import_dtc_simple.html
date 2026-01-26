@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import DTC - MyEDLS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .file-input {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .file-input:hover {
+            border-color: #4CAF50;
+            background: #f9f9f9;
+        }
+        .file-input input {
+            display: none;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .progress {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 6px;
+            display: none;
+        }
+        .progress.active {
+            display: block;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        .result.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+        .result.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .stat {
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📥 Import DTC dans Supabase</h1>
+        <p class="subtitle">Importez les 16 992 tâches du fichier dtc.csv</p>
+
+        <div class="file-input" onclick="document.getElementById('fileInput').click()">
+            <input type="file" id="fileInput" accept=".csv" />
+            <p>📁 Cliquez pour sélectionner le fichier <strong>dtc.csv</strong></p>
+            <p style="font-size: 12px; color: #999; margin-top: 5px;" id="fileName">Aucun fichier sélectionné</p>
+        </div>
+
+        <button id="importBtn" onclick="importDTC()" disabled>
+            🚀 Importer dans Supabase
+        </button>
+
+        <div class="progress" id="progress">
+            <p>⏳ Import en cours... Cela peut prendre 2-5 minutes pour 16 992 tâches.</p>
+            <p style="font-size: 12px; margin-top: 5px;">Ne fermez pas cette page !</p>
+        </div>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script type="module">
+        // ⚠️ IMPORTANT: Remplacez ces valeurs par vos vraies clés Supabase
+        const SUPABASE_URL = 'VOTRE_SUPABASE_URL'; // Ex: https://xxxxx.supabase.co
+        const SUPABASE_KEY = 'VOTRE_SUPABASE_ANON_KEY'; // Votre clé anon/public
+
+        // Vérifier si les clés sont configurées
+        if (SUPABASE_URL === 'VOTRE_SUPABASE_URL' || SUPABASE_KEY === 'VOTRE_SUPABASE_ANON_KEY') {
+            alert('⚠️ Veuillez configurer SUPABASE_URL et SUPABASE_KEY dans le fichier HTML !');
+        }
+
+        let selectedFile = null;
+
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                selectedFile = file;
+                document.getElementById('fileName').textContent = `Fichier sélectionné: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+                document.getElementById('importBtn').disabled = false;
+            }
+        });
+
+        window.importDTC = async function() {
+            if (!selectedFile) {
+                alert('Veuillez sélectionner un fichier CSV');
+                return;
+            }
+
+            const importBtn = document.getElementById('importBtn');
+            const progress = document.getElementById('progress');
+            const result = document.getElementById('result');
+
+            importBtn.disabled = true;
+            progress.classList.add('active');
+            result.className = 'result';
+            result.innerHTML = '';
+
+            try {
+                // Lire le fichier CSV
+                const csvContent = await selectedFile.text();
+                console.log('Fichier lu, taille:', csvContent.length, 'caractères');
+
+                // Appeler la fonction Edge Supabase
+                const response = await fetch(`${SUPABASE_URL}/functions/v1/import-dsc`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    },
+                    body: JSON.stringify({
+                        csvContent: csvContent,
+                        clearExisting: true
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erreur lors de l\'import');
+                }
+
+                if (data.success) {
+                    result.classList.add('success');
+                    result.innerHTML = `
+                        <h3>✅ Import réussi !</h3>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">${data.stats.familles}</div>
+                                <div class="stat-label">Familles (FT)</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${data.stats.categories}</div>
+                                <div class="stat-label">Catégories (CT)</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${data.stats.sousCategories}</div>
+                                <div class="stat-label">Sous-catégories (SC)</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${data.stats.taches.toLocaleString()}</div>
+                                <div class="stat-label">Tâches (T)</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(data.error || 'Erreur inconnue');
+                }
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                result.classList.add('error');
+                result.innerHTML = `
+                    <h3>❌ Erreur lors de l'import</h3>
+                    <p>${error.message}</p>
+                    <p style="font-size: 12px; margin-top: 10px;">Vérifiez la console pour plus de détails (F12)</p>
+                `;
+            } finally {
+                importBtn.disabled = false;
+                progress.classList.remove('active');
+            }
+        };
+    </script>
+</body>
+</html>

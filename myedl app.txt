@@ -1,0 +1,2 @@
+myedl app lo
+npm run cap:open:android

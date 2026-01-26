@@ -1,0 +1,27 @@
+<!-- 
+  Template des permissions iOS pour MyEDLS
+  Ces permissions seront automatiquement ajoutées par Capacitor lors de la création de la plateforme iOS
+  
+  Si vous devez les modifier manuellement, éditez :
+  ios/App/App/Info.plist
+-->
+
+<!-- Permissions nécessaires pour MyEDLS -->
+<key>NSCameraUsageDescription</key>
+<string>MyEDLS a besoin de la caméra pour capturer les visites et les photos des éléments à inspecter.</string>
+
+<key>NSMicrophoneUsageDescription</key>
+<string>MyEDLS a besoin du micro pour enregistrer vos commentaires audio pendant les visites.</string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>MyEDLS sauvegarde les photos de visite dans votre galerie et peut accéder aux photos existantes.</string>
+
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>MyEDLS sauvegarde les photos de visite dans votre galerie.</string>
+
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>MyEDLS géolocalise automatiquement vos projets pour faciliter la gestion des adresses.</string>
+
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>MyEDLS géolocalise automatiquement vos projets pour faciliter la gestion des adresses.</string>
+

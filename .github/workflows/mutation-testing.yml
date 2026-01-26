@@ -1,0 +1,138 @@
+name: Mutation Testing
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+  schedule:
+    # Run weekly on Sunday at 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  mutation-test:
+    name: Run Mutation Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Stryker Mutation Testing
+        run: npx stryker run
+        continue-on-error: true
+
+      - name: Upload mutation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-report
+          path: reports/mutation/html
+          retention-days: 30
+
+      - name: Check mutation score threshold
+        run: |
+          if [ -f reports/mutation/mutation-report.json ]; then
+            MUTATION_SCORE=$(jq '.mutationScore' reports/mutation/mutation-report.json)
+            echo "Mutation Score: $MUTATION_SCORE%"
+            
+            if (( $(echo "$MUTATION_SCORE < 50" | bc -l) )); then
+              echo "❌ Mutation score is below 50% threshold!"
+              exit 1
+            else
+              echo "✅ Mutation score meets the threshold!"
+            fi
+          else
+            echo "⚠️ Mutation report not found, skipping threshold check"
+          fi
+
+      - name: Comment PR with mutation score
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            try {
+              const report = JSON.parse(fs.readFileSync('reports/mutation/mutation-report.json', 'utf8'));
+              
+              const comment = `## 🧬 Mutation Testing Report
+              
+              **Mutation Score:** ${report.mutationScore.toFixed(2)}%
+              
+              | Metric | Value |
+              |--------|-------|
+              | Total Mutants | ${report.totalMutants} |
+              | Killed | ${report.killed} ✅ |
+              | Survived | ${report.survived} ❌ |
+              | Timeout | ${report.timeout} ⏱️ |
+              | No Coverage | ${report.noCoverage} 🔍 |
+              | Ignored | ${report.ignored} ⚪ |
+              
+              **Status:** ${report.mutationScore >= 80 ? '🎉 Excellent' : report.mutationScore >= 60 ? '✅ Good' : report.mutationScore >= 50 ? '⚠️ Acceptable' : '❌ Needs Improvement'}
+              
+              ${report.mutationScore < 50 ? '⚠️ **Warning:** Mutation score is below the 50% threshold!' : ''}
+              
+              [View Full Report](../actions/runs/${context.runId})
+              `;
+              
+              // Find existing mutation testing comment
+              const { data: comments } = await github.rest.issues.listComments({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+              });
+              
+              const botComment = comments.find(comment => 
+                comment.user.type === 'Bot' && 
+                comment.body.includes('🧬 Mutation Testing Report')
+              );
+              
+              // Update or create comment
+              if (botComment) {
+                await github.rest.issues.updateComment({
+                  comment_id: botComment.id,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: comment
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: comment
+                });
+              }
+            } catch (error) {
+              console.log('Could not read mutation report:', error.message);
+            }
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## 🧬 Mutation Testing Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/mutation/mutation-report.json ]; then
+            MUTATION_SCORE=$(jq '.mutationScore' reports/mutation/mutation-report.json)
+            echo "**Mutation Score:** $MUTATION_SCORE%" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Mutation testing helps verify the quality of your tests by introducing small changes (mutations) to your code and checking if your tests catch them." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Mutation report was not generated" >> $GITHUB_STEP_SUMMARY
+          fi

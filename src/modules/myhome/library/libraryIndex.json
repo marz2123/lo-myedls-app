@@ -1,0 +1,321 @@
+{
+  "applications": [
+    {
+      "id": "myedls",
+      "name": "MyEDLs – États des lieux",
+      "icon": "Camera",
+      "description": "Création et gestion des états des lieux immobiliers",
+      "color": "construction-orange",
+      "themes": [
+        {
+          "id": "edl-creation",
+          "name": "Créer un EDL",
+          "description": "Méthodologie complète de création d'un état des lieux",
+          "documents": [
+            {
+              "id": "edl_process",
+              "title": "Process complet EDL",
+              "type": "pdf",
+              "description": "Méthodologie de création d'un EDL conforme aux standards MyHome",
+              "tags": ["edl", "procédure", "myedls"],
+              "file": "/library/myedls/edl_process.pdf"
+            },
+            {
+              "id": "edl_checklist",
+              "title": "Checklist EDL",
+              "type": "md",
+              "description": "Liste de vérification pour un EDL complet",
+              "tags": ["edl", "checklist", "qualité"],
+              "content": "# Checklist EDL\n\n## Avant la visite\n- [ ] Vérifier les documents du projet\n- [ ] Préparer le matériel (caméra, smartphone)\n- [ ] Consulter l'historique du bien\n\n## Pendant la visite\n- [ ] Filmer chaque pièce\n- [ ] Décrire oralement les observations\n- [ ] Photographier les anomalies\n\n## Après la visite\n- [ ] Valider les tâches extraites\n- [ ] Compléter les descriptions\n- [ ] Générer le rapport"
+            }
+          ]
+        },
+        {
+          "id": "visite-reportage",
+          "name": "Visite & Reportage",
+          "description": "Techniques de capture vidéo et audio sur le terrain",
+          "documents": [
+            {
+              "id": "visite_guide",
+              "title": "Guide de visite terrain",
+              "type": "md",
+              "description": "Bonnes pratiques pour filmer et documenter une visite",
+              "tags": ["visite", "reportage", "vidéo"],
+              "content": "# Guide de visite terrain\n\n## Mode Guidé\nNavigation structurée : Partie → Lieu → Endroit → Zone\n\n## Mode Vidéo Continue\nFilmez en continu, l'IA segmente automatiquement\n\n## Conseils\n- Parlez clairement en décrivant ce que vous voyez\n- Filmez lentement pour une meilleure analyse IA\n- Mentionnez la localisation à voix haute"
+            }
+          ]
+        },
+        {
+          "id": "extraction-ia",
+          "name": "Extraction IA",
+          "description": "Comment l'IA analyse et extrait les tâches",
+          "documents": [
+            {
+              "id": "extraction_process",
+              "title": "Processus d'extraction IA",
+              "type": "md",
+              "description": "Fonctionnement de l'extraction automatique de tâches",
+              "tags": ["ia", "extraction", "tâches"],
+              "content": "# Extraction IA\n\n## Pipeline\n1. **Transcription** : Whisper convertit l'audio en texte\n2. **Vision** : GPT-4 Vision analyse les images/vidéos\n3. **Classification** : Attribution FT/CT/ST selon DSC\n4. **Localisation** : Mapping Partie/Lieu/Endroit/Zone\n\n## Validation\n- Vérifiez chaque tâche proposée\n- Corrigez les classifications si nécessaire\n- Ajoutez les quantités manquantes"
+            }
+          ]
+        },
+        {
+          "id": "classification-dsc",
+          "name": "Classification DSC",
+          "description": "Nomenclature des tâches BTP",
+          "documents": [
+            {
+              "id": "dsc_guide",
+              "title": "Guide DSC MyHome",
+              "type": "md",
+              "description": "Comprendre la structure FT/CT/ST",
+              "tags": ["dsc", "classification", "nomenclature"],
+              "content": "# Structure DSC\n\n## Hiérarchie\n- **FT** : Famille de Tâches (28 familles)\n- **CT** : Catégorie de Tâches\n- **ST** : Sous-catégorie de Tâches\n\n## Exemples\n- FT: Maçonnerie → CT: Murs → ST: Réparation fissures\n- FT: Plomberie → CT: Sanitaires → ST: Remplacement robinet"
+            }
+          ]
+        },
+        {
+          "id": "rapport-edl",
+          "name": "Génération du rapport",
+          "description": "Création et export du rapport EDL",
+          "documents": [
+            {
+              "id": "rapport_structure",
+              "title": "Structure du rapport EDL",
+              "type": "md",
+              "description": "Les 9 sections d'un rapport EDL complet",
+              "tags": ["rapport", "pdf", "export"],
+              "content": "# Structure rapport EDL\n\n1. Page de garde\n2. Description du bâtiment\n3. Point réglementaire\n4. Description des lieux\n5. Synthèse Denormandie\n6. Synthèse par famille FT\n7. Détail par lieu\n8. Tâches extraites\n9. Notes et annexes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mychantiers",
+      "name": "MyChantiers – Suivi chantier",
+      "icon": "HardHat",
+      "description": "Gestion et suivi des chantiers de construction",
+      "color": "construction-blue",
+      "themes": [
+        {
+          "id": "phases-chantier",
+          "name": "Phases chantier",
+          "description": "Les différentes phases d'un projet de construction",
+          "documents": [
+            {
+              "id": "phases_guide",
+              "title": "Guide des phases chantier",
+              "type": "md",
+              "description": "Du terrassement à la réception",
+              "tags": ["phases", "chantier", "planning"],
+              "content": "# Phases de chantier\n\n## 1. Études\n- Plans, permis, diagnostics\n\n## 2. Démolition\n- Curage, dépose\n\n## 3. Gros œuvre\n- Structure, maçonnerie\n\n## 4. Second œuvre\n- Cloisons, réseaux\n\n## 5. Finitions\n- Peinture, revêtements\n\n## 6. Réception\n- Contrôles, PV"
+            }
+          ]
+        },
+        {
+          "id": "normes-re2020",
+          "name": "Normes RT/RE 2020",
+          "description": "Réglementation thermique et environnementale",
+          "documents": [
+            {
+              "id": "re2020_resume",
+              "title": "Résumé RE 2020",
+              "type": "md",
+              "description": "Points clés de la réglementation",
+              "tags": ["re2020", "normes", "thermique"],
+              "content": "# RE 2020\n\n## Objectifs\n- Réduire l'impact carbone\n- Améliorer le confort d'été\n- Optimiser la performance énergétique\n\n## Indicateurs clés\n- Bbio : besoin bioclimatique\n- Cep : consommation énergie primaire\n- IC : impact carbone"
+            }
+          ]
+        },
+        {
+          "id": "suivi-journalier",
+          "name": "Suivi journalier",
+          "description": "Journal de chantier quotidien",
+          "documents": [
+            {
+              "id": "journal_template",
+              "title": "Modèle journal de chantier",
+              "type": "md",
+              "description": "Template pour le suivi quotidien",
+              "tags": ["journal", "suivi", "quotidien"],
+              "content": "# Journal de chantier\n\n## Date : ___\n\n### Météo\n- [ ] Beau temps\n- [ ] Pluie\n- [ ] Gel\n\n### Équipes présentes\n- Entreprise 1 : ___ personnes\n- Entreprise 2 : ___ personnes\n\n### Travaux réalisés\n...\n\n### Problèmes rencontrés\n...\n\n### Actions demain\n..."
+            }
+          ]
+        },
+        {
+          "id": "securite-chantier",
+          "name": "Sécurité & obligations",
+          "description": "Règles de sécurité et obligations légales",
+          "documents": [
+            {
+              "id": "securite_base",
+              "title": "Règles de sécurité chantier",
+              "type": "md",
+              "description": "Les fondamentaux de la sécurité",
+              "tags": ["sécurité", "epi", "obligations"],
+              "content": "# Sécurité chantier\n\n## EPI obligatoires\n- Casque\n- Chaussures de sécurité\n- Gilet haute visibilité\n- Gants\n\n## Affichages\n- Plan d'évacuation\n- Numéros d'urgence\n- Consignes de sécurité"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "myprojets",
+      "name": "MyProjets – Gestion de projet",
+      "icon": "Folders",
+      "description": "Création et suivi des projets immobiliers",
+      "color": "yellow-500",
+      "themes": [
+        {
+          "id": "creation-projet",
+          "name": "Création projet",
+          "description": "Étapes de création d'un nouveau projet",
+          "documents": [
+            {
+              "id": "projet_creation",
+              "title": "Guide création projet",
+              "type": "md",
+              "description": "Les 6 étapes de création",
+              "tags": ["projet", "création", "wizard"],
+              "content": "# Création de projet\n\n## Étape 1 : Type de bien\nImmeuble, Maison, Appartement, Commercial\n\n## Étape 2 : Localisation\nAdresse complète et géolocalisation\n\n## Étape 3 : Adresse 360°\nEnrichissement automatique (DVF, BDNB, PLU)\n\n## Étape 4 : Composition\nStructure du bâtiment\n\n## Étape 5 : Documents\nUpload des plans et diagnostics\n\n## Étape 6 : Récapitulatif\nValidation finale"
+            }
+          ]
+        },
+        {
+          "id": "donnees-enrichies",
+          "name": "Données enrichies",
+          "description": "Sources de données automatiques",
+          "documents": [
+            {
+              "id": "enrichissement_guide",
+              "title": "Guide enrichissement",
+              "type": "md",
+              "description": "APIs et données disponibles",
+              "tags": ["api", "données", "enrichissement"],
+              "content": "# Enrichissement automatique\n\n## Sources officielles\n- **DVF** : Transactions immobilières\n- **BDNB** : Base nationale des bâtiments\n- **PLU** : Plan local d'urbanisme\n- **Géorisques** : Risques naturels\n- **Cadastre** : Données parcellaires\n\n## Analyse IA\n- Estimation façade\n- Détection matériaux\n- Analyse toiture"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "myclient",
+      "name": "MyClient – Relation & ASL",
+      "icon": "Users",
+      "description": "Gestion de la relation client et des ASL",
+      "color": "green-500",
+      "themes": [
+        {
+          "id": "asl-coproprietes",
+          "name": "ASL & copropriétés",
+          "description": "Gestion des associations syndicales libres",
+          "documents": [
+            {
+              "id": "asl_guide",
+              "title": "Guide ASL",
+              "type": "md",
+              "description": "Fonctionnement des ASL",
+              "tags": ["asl", "copropriété", "syndic"],
+              "content": "# Associations Syndicales Libres\n\n## Définition\nGroupement de propriétaires pour la gestion d'équipements communs\n\n## Mode Client\nVue simplifiée pour les copropriétaires :\n- Synthèse du projet\n- États des lieux\n- Avancement travaux\n- Médias partagés"
+            }
+          ]
+        },
+        {
+          "id": "communication-client",
+          "name": "Communication client",
+          "description": "Bonnes pratiques de communication",
+          "documents": [
+            {
+              "id": "communication_tips",
+              "title": "Tips communication",
+              "type": "md",
+              "description": "Conseils pour une communication efficace",
+              "tags": ["communication", "client", "relation"],
+              "content": "# Communication client\n\n## Règles d'or\n1. Répondre sous 24h\n2. Être transparent sur les délais\n3. Documenter avec photos/vidéos\n4. Utiliser un langage simple\n\n## Outils\n- Partage de rapports PDF\n- Espace client dédié\n- Notifications automatiques"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "myachat",
+      "name": "MyAchat – Fournisseurs & Matériel",
+      "icon": "ShoppingCart",
+      "description": "Gestion des achats et fournisseurs",
+      "color": "purple-500",
+      "themes": [
+        {
+          "id": "gestion-fournisseurs",
+          "name": "Gestion fournisseurs",
+          "description": "Référencement et suivi fournisseurs",
+          "documents": [
+            {
+              "id": "fournisseurs_guide",
+              "title": "Guide fournisseurs",
+              "type": "md",
+              "description": "Gérer son panel fournisseurs",
+              "tags": ["fournisseurs", "achats", "panel"],
+              "content": "# Gestion fournisseurs\n\n## Critères de sélection\n- Qualité produits\n- Délais de livraison\n- Prix compétitifs\n- SAV réactif\n\n## Suivi\n- Évaluations régulières\n- Historique commandes\n- Alertes prix"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "myadmin",
+      "name": "MyAdmin – Juridique & RH",
+      "icon": "Shield",
+      "description": "Gestion administrative, juridique et RH",
+      "color": "red-500",
+      "themes": [
+        {
+          "id": "contrats",
+          "name": "Contrats",
+          "description": "Modèles et gestion des contrats",
+          "documents": [
+            {
+              "id": "contrats_types",
+              "title": "Contrats types",
+              "type": "md",
+              "description": "Modèles de contrats BTP",
+              "tags": ["contrats", "juridique", "modèles"],
+              "content": "# Contrats types\n\n## Types de contrats\n- Marché de travaux\n- Contrat de sous-traitance\n- Ordre de service\n- Avenant\n\n## Mentions obligatoires\n- Parties contractantes\n- Objet du marché\n- Prix et modalités de paiement\n- Délais d'exécution\n- Garanties"
+            }
+          ]
+        },
+        {
+          "id": "assurances",
+          "name": "Assurances",
+          "description": "Assurances obligatoires BTP",
+          "documents": [
+            {
+              "id": "assurances_guide",
+              "title": "Guide assurances BTP",
+              "type": "md",
+              "description": "Les assurances indispensables",
+              "tags": ["assurances", "garanties", "obligatoire"],
+              "content": "# Assurances BTP\n\n## Obligatoires\n- **RC Pro** : Responsabilité civile professionnelle\n- **Décennale** : Garantie 10 ans\n- **Dommages-ouvrage** : Protection maître d'ouvrage\n\n## Recommandées\n- Tous risques chantier\n- Protection juridique\n- Bris de machine"
+            }
+          ]
+        },
+        {
+          "id": "rh-equipes",
+          "name": "RH & équipes",
+          "description": "Gestion des ressources humaines",
+          "documents": [
+            {
+              "id": "rh_basiques",
+              "title": "Fondamentaux RH chantier",
+              "type": "md",
+              "description": "Gestion des équipes terrain",
+              "tags": ["rh", "équipes", "management"],
+              "content": "# RH Chantier\n\n## Gestion des équipes\n- Planning des présences\n- Affectation par compétences\n- Suivi des heures\n\n## Formation\n- Habilitations obligatoires\n- Formation sécurité\n- Montée en compétences"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

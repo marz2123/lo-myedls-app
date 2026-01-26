@@ -1,0 +1,223 @@
+project_id = "hizljuulmreuyakgzbrn"
+
+[functions.analyze-visit-sequence]
+verify_jwt = true
+
+[functions.extract-tasks]
+verify_jwt = true
+
+[functions.extract-from-pdf]
+verify_jwt = true
+
+[functions.import-taxonomy]
+verify_jwt = true
+
+[functions.transcribe-and-extract]
+verify_jwt = true
+
+[functions.fill-template-fields]
+verify_jwt = true
+
+[functions.myaladin-chat]
+verify_jwt = true
+
+[functions.reclassify-tasks]
+verify_jwt = true
+
+[functions.correct-classification]
+verify_jwt = true
+
+[functions.enhance-task-description]
+verify_jwt = true
+
+[functions.predict-tasks]
+verify_jwt = true
+
+[functions.detect-missing-tasks]
+verify_jwt = true
+
+[functions.get-dsc-recommendations]
+verify_jwt = true
+
+[functions.auto-fix-dsc-labels]
+verify_jwt = true
+
+[functions.fix-taxonomy-labels]
+verify_jwt = true
+
+[functions.enhance-dsc-data]
+verify_jwt = true
+
+[functions.analyze-video-frame]
+verify_jwt = true
+
+[functions.transcribe-visit-audio]
+verify_jwt = true
+
+[functions.process-visit-session]
+verify_jwt = true
+
+[functions.generate-edl-pdf]
+verify_jwt = true
+
+[functions.generate-tasks-csv]
+verify_jwt = true
+
+[functions.generate-3d-model]
+verify_jwt = true
+
+[functions.generate-floor-plan]
+verify_jwt = true
+
+[functions.analyze-pathologies]
+verify_jwt = true
+
+[functions.calculate-repair-costs]
+verify_jwt = true
+
+[functions.generate-task-recommendations]
+verify_jwt = true
+
+[functions.detect-anomalies]
+verify_jwt = true
+
+[functions.get-extraction-hints]
+verify_jwt = true
+
+[functions.analyze-project-documents]
+verify_jwt = true
+
+[functions.suggest-building-structure]
+verify_jwt = true
+
+[functions.transcribe-building-structure]
+verify_jwt = true
+
+[functions.generate-business-model-csv]
+verify_jwt = true
+
+[functions.generate-business-model-pdf]
+verify_jwt = true
+
+[functions.analyze-building-ai]
+verify_jwt = false
+
+[functions.ai-unified-analysis]
+verify_jwt = true
+
+[functions.merge-taxonomy]
+verify_jwt = true
+
+[functions.get-property-owners]
+verify_jwt = false
+
+[functions.property-enrichment]
+verify_jwt = false
+
+[functions.estimate-exterior-works]
+verify_jwt = false
+
+[functions.generate-ft-ct-st-from-exterior]
+verify_jwt = false
+
+[functions.generate-tasks]
+verify_jwt = true
+
+[functions.import-dsc]
+verify_jwt = false
+
+[functions.enrich-dsc-ai]
+verify_jwt = false
+
+[functions.correct-text]
+verify_jwt = true
+
+[functions.fetch-dvf-data]
+verify_jwt = false
+
+[functions.fetch-bdnb-data]
+verify_jwt = false
+
+[functions.discover-apis]
+verify_jwt = false
+
+[functions.smart-data-filler]
+verify_jwt = false
+
+[functions.extract-tasks-from-sequences]
+verify_jwt = true
+
+[functions.extract-location-from-voice]
+verify_jwt = true
+
+[functions.segment-video-capture]
+verify_jwt = true
+
+[functions.edl-ai-pipeline]
+verify_jwt = true
+
+[functions.suggest-sequence-location]
+verify_jwt = true
+
+[functions.myaladin-orchestrator]
+verify_jwt = true
+
+[functions.extract-tasks-master]
+verify_jwt = true
+
+[functions.predictive-analysis]
+verify_jwt = true
+
+[functions.generate-edl-summary]
+verify_jwt = true
+
+[functions.export-edl-to-project]
+verify_jwt = true
+
+[functions.validate-edl]
+verify_jwt = false
+
+[functions.check-european-compliance]
+verify_jwt = true
+
+[functions.translate-edl]
+verify_jwt = true
+
+[functions.generate-eu-certificate]
+verify_jwt = true
+
+[functions.multiagent-orchestrator]
+verify_jwt = true
+
+[functions.generate-bim-model]
+verify_jwt = true
+
+[functions.export-bim-model]
+verify_jwt = true
+
+[functions.sync-digital-twin]
+verify_jwt = true
+
+[functions.analyze-energy]
+verify_jwt = true
+
+[functions.generate-autostory-script]
+verify_jwt = true
+
+[functions.generate-autostory-audio]
+verify_jwt = true
+
+[functions.openai-realtime-token]
+verify_jwt = true
+
+[functions.openai-analyze-image]
+verify_jwt = true
+
+[functions.openai-generate-image]
+verify_jwt = true
+
+[functions.openai-analyze-video]
+verify_jwt = true
+
+[functions.gemini-analyze-media]
+verify_jwt = true

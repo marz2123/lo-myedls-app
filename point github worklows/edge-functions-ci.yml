@@ -1,0 +1,142 @@
+name: Edge Functions CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'supabase/functions/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'supabase/functions/**'
+
+jobs:
+  test:
+    name: Test Edge Functions
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Run unit tests with coverage
+        run: |
+          deno test --allow-net --allow-env --coverage=coverage supabase/functions/**/*.test.ts
+
+      - name: Generate coverage report
+        run: |
+          deno coverage coverage --lcov --output=coverage.lcov
+
+      - name: Generate coverage summary
+        id: coverage
+        run: |
+          deno run --allow-read scripts/coverage-summary.ts coverage.lcov
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.lcov
+          flags: unittests
+          name: codecov-edge-functions
+          fail_ci_if_error: false
+
+      - name: Comment PR with coverage
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const coverage = fs.readFileSync('coverage-summary.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: coverage
+            });
+
+      - name: Lint edge functions
+        run: |
+          deno lint supabase/functions/**/*.ts
+
+      - name: Type check edge functions
+        run: |
+          deno check supabase/functions/**/index.ts
+
+      - name: Check coverage threshold
+        run: |
+          deno run --allow-read scripts/check-coverage-threshold.ts coverage.lcov 80
+
+  integration-test:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: test
+    
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      LOVABLE_API_KEY: ${{ secrets.LOVABLE_API_KEY }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Run integration tests
+        run: |
+          deno test --allow-net --allow-env supabase/functions/**/*.integration.test.ts
+
+  deploy:
+    name: Deploy to Supabase
+    runs-on: ubuntu-latest
+    needs: [test, integration-test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Deploy Edge Functions
+        run: |
+          supabase functions deploy extract-tasks --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          supabase functions deploy extract-from-pdf --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          supabase functions deploy import-taxonomy --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          supabase functions deploy transcribe-and-extract --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          supabase functions deploy fill-template-fields --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          supabase functions deploy myaladin-chat --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+  notify:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: always()
+    
+    steps:
+      - name: Send success notification
+        if: needs.deploy.result == 'success'
+        run: |
+          echo "✅ Edge functions deployed successfully!"
+
+      - name: Send failure notification
+        if: needs.deploy.result == 'failure'
+        run: |
+          echo "❌ Edge functions deployment failed!"
+          exit 1

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyEDLs - États des lieux intelligents</title>
+    <meta
+      name="description"
+      content="MyEDLs : gestion intelligente de vos états des lieux, avec capture photo/vidéo/audio et génération de rapports."
+    />
+    <link rel="canonical" href="/" />
+
+    <meta property="og:title" content="MyEDLs - États des lieux intelligents" />
+    <meta
+      property="og:description"
+      content="Gestion intelligente de vos états des lieux, avec capture photo/vidéo/audio et génération de rapports."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Lovable" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <script>
+      // If the screen is totally blank, this block should STILL render.
+      // It helps distinguish "HTML not updated/cached" vs "JS crash".
+      (function () {
+        try {
+          document.documentElement.style.background = "#ffffff";
+          document.body.style.margin = "0";
+          document.body.style.background = "#ffffff";
+          document.body.style.color = "#111827";
+
+          window.addEventListener("error", function (e) {
+            var el = document.getElementById("boot-error");
+            if (el) el.textContent = "Erreur JS: " + (e.message || "(inconnue)");
+          });
+
+          window.addEventListener("unhandledrejection", function (e) {
+            var el = document.getElementById("boot-error");
+            if (el) el.textContent = "Erreur promise: " + String(e.reason || "(inconnue)");
+          });
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="root">
+      <main
+        style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;"
+      >
+        <div style="text-align:center;max-width:520px;padding:24px;">
+          <h1 style="margin:0 0 8px 0;font-size:20px;">MyEDLs</h1>
+          <p style="margin:0;color:#374151;">Chargement…</p>
+          <p id="boot-error" style="margin:12px 0 0 0;color:#b91c1c;font-size:12px;"></p>
+          <p style="margin:12px 0 0 0;color:#6b7280;font-size:12px;">
+            Si tu vois encore une page totalement blanche, c’est probablement que ton mobile affiche une ancienne version en cache.
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <noscript>
+      <div style="padding:16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+        JavaScript est requis pour utiliser MyEDLs.
+      </div>
+    </noscript>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

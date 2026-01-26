@@ -1,0 +1,29 @@
+<!-- 
+  Template des permissions Android pour MyEDLS
+  Ces permissions seront automatiquement ajoutées par Capacitor lors de la création de la plateforme Android
+  
+  Si vous devez les modifier manuellement, éditez :
+  android/app/src/main/AndroidManifest.xml
+-->
+
+<!-- Permissions nécessaires pour MyEDLS -->
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+<!-- Pour Android < 10 (API 29) -->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
+    android:maxSdkVersion="28" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" 
+    android:maxSdkVersion="28" />
+
+<!-- Features nécessaires -->
+<uses-feature android:name="android.hardware.camera" android:required="false" />
+<uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+<uses-feature android:name="android.hardware.microphone" android:required="false" />
+<uses-feature android:name="android.hardware.location" android:required="false" />
+<uses-feature android:name="android.hardware.location.gps" android:required="false" />
+
