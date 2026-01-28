@@ -1,10 +1,10 @@
 workflows:
   ios-workflow:
-    name: iOS Build
+    name: Build iOS Capacitor
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
-      node: latest
+      node: 20
       xcode: latest
       cocoapods: default
       vars:
@@ -14,18 +14,19 @@ workflows:
       - name: Install dependencies
         script: |
           npm install
-          npm install @capacitor/core @capacitor/cli @capacitor/ios
-      - name: Web Build
+          npm install @capacitor/ios
+      - name: Build Web
         script: |
           npm run build
       - name: Capacitor Sync
         script: |
           npx cap sync ios
-      - name: Install CocoaPods
+      - name: Install Pods
         script: |
           cd ios/App && pod install
-      - name: Build iOS (.ipa)
+      - name: Build IPA
         script: |
+          # Note: Cette étape cherchera tes certificats Apple
           xcode-project build-ipa \
             --workspace "$XCODE_WORKSPACE" \
             --scheme "$XCODE_SCHEME"
